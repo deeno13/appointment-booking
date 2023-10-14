@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  trainer: one
+  day_of_week: 1
+  start_time: 2023-10-14 20:33:22
+  end_time: 2023-10-14 20:33:22
+
+two:
+  trainer: two
+  day_of_week: 1
+  start_time: 2023-10-14 20:33:22
+  end_time: 2023-10-14 20:33:22
