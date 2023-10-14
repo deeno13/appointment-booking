@@ -1,4 +1,11 @@
-<div>
-  <h1 class="font-bold text-4xl">Trainers#show</h1>
-  <p>Find me in app/views/trainers/show.html.erb</p>
+<div class='mx-auto md:w-2/3 w-full flex'>
+  <div class='mx-auto'>
+    <%= render @trainer %>
+
+    <%= link_to 'Edit trainer', edit_trainer_path(@trainer), class: 'mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
+    <div class='inline-block ml-2'>
+      <%= button_to 'Destroy trainer', trainer_path(@trainer), method: :delete, class: 'mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium' %>
+    </div>
+    <%= link_to 'Back to trainers', trainers_path, class: 'ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
+  </div>
 </div>

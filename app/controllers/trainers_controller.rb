@@ -39,11 +39,11 @@ class TrainersController < ApplicationController
 
   private
 
-  def set_trainer
-    @trainer = Trainer.find(params[:id])
-  end
+    def set_trainer
+      @trainer = Trainer.find(params[:id])
+    end
 
-  def trainer_params
-    params.require(:trainer).permit(:name)
-  end
+    def trainer_params
+      params.require(:trainer).permit(:name)
+    end
 end
