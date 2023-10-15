@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :trainers
-  resources :appointments
+  resources :trainers do
+    resources :appointments
+  end
   resources :availabilities
 
   # get 'availabilities/index'

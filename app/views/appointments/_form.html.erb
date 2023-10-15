@@ -1,0 +1,16 @@
+<%= simple_form_for [@trainer, @appointment], html: { class: 'contents' } do |f| %>
+  <div class='my-5'>
+    <%= f.association :trainer %>
+    <%= f.input :start_time %>
+    <%= f.input :end_time %>
+    <%# <%= f.input :name, input_html: { class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' } %> %>
+  </div>
+
+  <div class='inline'>
+    <% if action_name == 'new' %>
+      <%= f.submit 'Create appointment', class: 'rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer' %>
+    <% elsif action_name == 'edit' %>
+      <%= f.submit 'Update appointment', class: 'rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer' %>
+    <% end %>
+  </div>
+<% end %>

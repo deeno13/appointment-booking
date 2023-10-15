@@ -1,4 +1,29 @@
-<div>
-  <h1 class="font-bold text-4xl">Appointments#index</h1>
-  <p>Find me in app/views/appointments/index.html.erb</p>
+<div class='w-full'>
+  <div class='flex justify-between items-center'>
+    <h1 class='font-bold text-4xl'>Appointments</h1>
+    <%= link_to 'New Appointment', new_trainer_appointment_path, class: 'rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium' %>
+  </div>
+  
+  <div id='appointments' class='min-w-full'>
+    <table class='border-collapse border border-slate-500 table-fixed w-full'>
+      <thead>
+        <tr>
+          <th class='border border-slate-600'>Trainer</th>
+          <th class='border border-slate-600'>Start Time</th>
+          <th class='border border-slate-600'>End Time</th>
+          <th class='border border-slate-600'>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @appointments.each do |appointment| %>
+          <tr>
+            <td class='border border-slate-700'><%= appointment.trainer.name %></td>
+            <td class='border border-slate-700'><%= appointment.start_time %></td>
+            <td class='border border-slate-700'><%= appointment.end_time %></td>
+            <td class='border border-slate-600'><%= link_to 'Show', trainer_appointment_path(@trainer, appointment) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

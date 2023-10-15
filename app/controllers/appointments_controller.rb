@@ -40,15 +40,15 @@ class AppointmentsController < ApplicationController
 
   private
 
-  def set_trainer
-    @trainer = Trainer.find(params[:trainer_id])
-  end
+    def set_trainer
+      @trainer = Trainer.find(params[:trainer_id])
+    end
 
-  def set_appointment
-    @appointment = Trainer.appointments.find(params[:id])
-  end
+    def set_appointment
+      @appointment = Appointment.find(params[:id])
+    end
 
-  def appointment_params
-    require(:appointment).permit(:start_time, :end_time)
-  end
+    def appointment_params
+      params.require(:appointment).permit(:start_time, :end_time)
+    end
 end
