@@ -1,4 +1,7 @@
-<div>
-  <h1 class="font-bold text-4xl">Availabilities#new</h1>
-  <p>Find me in app/views/availabilities/new.html.erb</p>
+<div class='mx-auto md:w-2/3 w-full'>
+  <h1 class='font-bold text-4xl'>New availability</h1>
+
+  <%= render 'form', availability: @availability %>
+
+  <%= link_to 'Back to availabilities', trainer_availabilities_path, class: 'ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
 </div>

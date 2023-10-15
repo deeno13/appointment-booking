@@ -40,15 +40,15 @@ class AvailabilitiesController < ApplicationController
 
   private
 
-  def set_trainer
-    @trainer = Trainer.find(params[:trainer_id])
-  end
+    def set_trainer
+      @trainer = Trainer.find(params[:trainer_id])
+    end
 
-  def set_availability
-    @availability = @trainer.availabilities.find(params[:id])
-  end
+    def set_availability
+      @availability = Availability.find(params[:id])
+    end
 
-  def availability_params
-    params.require(:availabilities).permit(:day_of_week, :start_time, :end_time)
-  end
+    def availability_params
+      params.require(:availability).permit(:day_of_week, :start_time, :end_time)
+    end
 end
