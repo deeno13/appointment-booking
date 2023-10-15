@@ -1,0 +1,24 @@
+<div id='<%= dom_id availability %>'>
+  <table class='border-collapse border border-slate-500 table-fixed w-full'>
+    <thead>
+      <tr>
+        <th class='border border-slate-600'>Trainer</th>
+        <th class='border border-slate-600'>Start Time</th>
+        <th class='border border-slate-600'>End Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class='border border-slate-700'><%= availability.trainer.name %></td>
+        <td class='border border-slate-700'><%= availability.start_time %></td>
+        <td class='border border-slate-700'><%= availability.end_time %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show availability", availability, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit availability", edit_availability_path(availability), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class='mt-6'>
+  <% end %>
+</div>

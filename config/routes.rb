@@ -1,21 +1,8 @@
 Rails.application.routes.draw do
   resources :trainers do
     resources :appointments
+    resources :availabilities
   end
-  resources :availabilities
-
-  # get 'availabilities/index'
-  # get 'availabilities/show'
-  # get 'availabilities/new'
-  # get 'availabilities/edit'
-  # get 'appointments/index'
-  # get 'appointments/show'
-  # get 'appointments/new'
-  # get 'appointments/edit'
-  # get 'trainers/index'
-  # get 'trainers/new'
-  # get 'trainers/show'
-  # get 'trainers/edit'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
