@@ -1,8 +1,12 @@
-<%= simple_form_for [@trainer, @appointment], html: { class: 'contents' } do |f| %>
+<%= form_with model: [@trainer, @appointment], class: 'contents' do |f| %>
   <div class='my-5'>
-    <%= f.association :trainer %>
-    <%= f.input :start_time %>
-    <%= f.input :end_time %>
+    <%= f.label :start_time %>
+    <%= f.datetime_field :start_time, class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
+  </div>
+
+  <div class='my-5'>
+    <%= f.label :end_time %>
+    <%= f.datetime_field :end_time, class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
   </div>
 
   <div class='inline'>
