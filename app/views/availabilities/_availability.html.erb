@@ -1,17 +1,17 @@
-<div id='<%= dom_id availability %>'>
-  <table class='border-collapse border border-slate-500 table-fixed w-full'>
-    <thead>
+<div id='<%= dom_id availability %>' class='relative overflow-x-auto'>
+  <table class='w-full text-sm text-left text-gray-500'>
+    <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
       <tr>
-        <th class='border border-slate-600'>Trainer</th>
-        <th class='border border-slate-600'>Start Time</th>
-        <th class='border border-slate-600'>End Time</th>
+        <th class='px-6 py-3'>Trainer</th>
+        <th class='px-6 py-3'>Start Time</th>
+        <th class='px-6 py-3'>End Time</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class='border border-slate-700'><%= availability.trainer.name %></td>
-        <td class='border border-slate-700'><%= availability.start_time %></td>
-        <td class='border border-slate-700'><%= availability.end_time %></td>
+      <tr class='bg-white border-b'>
+        <th class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'><%= availability.trainer.name %></th>
+        <td class='px-6 py-4'><%= availability.start_time.strftime("%A, %b %d, %Y %l:%M %p") %></td>
+        <td class='px-6 py-4'><%= availability.end_time.strftime("%A, %b %d, %Y %l:%M %p") %></td>
       </tr>
     </tbody>
   </table>
