@@ -1,12 +1,16 @@
-<div id='<%= dom_id trainer %>'>
-  <p class='my-5'>
-    <strong class='block font-medium mb-1'>Name:</strong>
-    <%= trainer.name %>
-  </p>
+<div id='<%= dom_id trainer %>'>  
+  <div class='max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow'>
+    <%= link_to trainer do %>
+      <h5 class='mb-2 text-2xl font-bold tracking-tight text-gray-900 hover:text-blue-800'>
+        <%= trainer.name %>
+      </h5>
+    <% end %>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show trainer", trainer, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit trainer", edit_trainer_path(trainer), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class='mt-6'>
-  <% end %>
+    <p class="mb-3 font-normal text-gray-700">This trainer is dedicated and works hard to help a trainee.</p>
+
+    <% if action_name != "show" %>
+      <%= link_to "Show trainer", trainer, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      <%= link_to "Edit trainer", edit_trainer_path(trainer), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <% end %>
+  </div>
 </div>
