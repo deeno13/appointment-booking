@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'pages#home'
   resources :trainers do
     resources :appointments
     resources :availabilities
@@ -11,5 +12,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "trainers#index"
+  # root "trainers#index"
 end
