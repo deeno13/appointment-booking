@@ -1,5 +1,26 @@
 <div class='mx-auto md:w-2/3 w-full'>
-  <h1 class='font-bold text-4xl'>New appointment</h1>
+  <h1 class='font-bold text-4xl'>Book an appointment with <%= @trainer.name %></h1>
+
+  <div class='my-5'>
+    <table class='w-full text-sm text-left text-gray-500'>
+      <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
+        <tr>
+          <th class='px-6 py-3'>Day of Week</th>
+          <th class='px-6 py-3'>Start Time</th>
+          <th class='px-6 py-3'>End Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @trainer.availabilities.each do |availability| %>
+          <tr class='bg-white border-b'>
+            <td class='px-6 py-4'><%= availability.day_of_week %></td>
+            <td class='px-6 py-4'><%= availability.start_time.strftime("%l:%M %p") %></td>
+            <td class='px-6 py-4'><%= availability.end_time.strftime("%l:%M %p") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
   <%= render 'form', appointment: @appointment %>
 
