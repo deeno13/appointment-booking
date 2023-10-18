@@ -18,7 +18,7 @@ class AppointmentsController < ApplicationController
     if @appointment.save
       redirect_to trainer_appointments_path(@trainer), notice: 'Appointment was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class AppointmentsController < ApplicationController
     if @appointment.update(appointment_params)
       redirect_to trainer_appointments_path(@trainer), notice: 'Appointment was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

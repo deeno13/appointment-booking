@@ -17,7 +17,7 @@ class TrainersController < ApplicationController
     if @trainer.save
       redirect_to @trainer, notice: 'Trainer was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class TrainersController < ApplicationController
     if @trainer.update(trainer_params)
       redirect_to @trainer, notice: 'Trainer was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

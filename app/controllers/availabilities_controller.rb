@@ -18,7 +18,7 @@ class AvailabilitiesController < ApplicationController
     if @availability.save
       redirect_to trainer_availabilities_path(@trainer), notice: 'Availability was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class AvailabilitiesController < ApplicationController
     if @availability.update(availability_params)
       redirect_to trainer_availabilities_path(@trainer), notice: 'Availability was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
