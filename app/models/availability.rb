@@ -1,5 +1,7 @@
 class Availability < ApplicationRecord
   belongs_to :trainer
 
-  enum day_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
+  validates :day_of_week, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
 end
