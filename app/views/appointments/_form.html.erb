@@ -14,11 +14,21 @@
   <div class='my-5'>
     <%= f.label :start_time %>
     <%= f.datetime_field :start_time, class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
+    <% if @appointment.errors[:start_time].any? %>
+      <% @appointment.errors.full_messages_for(:start_time) .each do |error| %>
+        <p class="text-red-500 mt-1"><%= error %></p>
+      <% end %>
+    <% end %>
   </div>
 
   <div class='my-5'>
     <%= f.label :end_time %>
-    <%= f.datetime_field :end_time, class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
+    <%= f.datetime_field :end_time, step: 3600, class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
+    <% if @appointment.errors[:end_time].any? %>
+      <% @appointment.errors.full_messages_for(:end_time) .each do |error| %>
+        <p class="text-red-500 mt-1"><%= error %></p>
+      <% end %>
+    <% end %>
   </div>
 
   <div class='inline'>

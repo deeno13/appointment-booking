@@ -19,11 +19,20 @@
   <div class='my-5'>
     <%= f.label :start_time %>
     <%= f.time_select :start_time %>
-  </div>
+    <% if @availability.errors[:start_time].any? %>
+      <% @availability.errors.full_messages_for(:start_time) .each do |error| %>
+        <p class="text-red-500 mt-1"><%= error %></p>
+      <% end %>
+    <% end %>  </div>
 
   <div class='my-5'>
     <%= f.label :end_time %>
     <%= f.time_select :end_time %>
+    <% if @availability.errors[:end_time].any? %>
+      <% @availability.errors.full_messages_for(:end_time) .each do |error| %>
+        <p class="text-red-500 mt-1"><%= error %></p>
+      <% end %>
+    <% end %>
   </div>
 
   <div class='inline'>
