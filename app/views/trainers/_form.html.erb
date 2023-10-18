@@ -14,11 +14,7 @@
   <div class='my-5'>
     <%= f.label :name %>
     <%= f.text_field :name, class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
-    <% if @trainer.errors[:name].any? %>
-      <% @trainer.errors.full_messages_for(:name) .each do |error| %>
-        <p class="text-red-500 mt-1"><%= error %></p>
-      <% end %>
-    <% end %>
+    <%= inline_errors(@trainer, :name) %>
   </div>
 
   <div class='inline'>
