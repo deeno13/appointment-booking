@@ -3,6 +3,7 @@
     <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
       <tr>
         <th class='px-6 py-3'>Trainer</th>
+        <th class='px-6 py-3'>Day of Week</th>
         <th class='px-6 py-3'>Start Time</th>
         <th class='px-6 py-3'>End Time</th>
       </tr>
@@ -15,10 +16,4 @@
       </tr>
     </tbody>
   </table>
-
-  <% if action_name != "show" %>
-    <%= link_to "Show availability", availability, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit availability", edit_availability_path(availability), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class='mt-6'>
-  <% end %>
 </div>
