@@ -8,7 +8,9 @@
 
     <p class="mb-3 font-normal text-gray-700">This trainer is dedicated and works hard to help a trainee.</p>
 
-    <% if action_name != "show" %>
+    <% if action_name == 'home' %>
+      <%= link_to 'Book Appointment', new_trainer_appointment_path(trainer), class: 'rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
+    <% elsif action_name != 'show'%>
       <%= link_to "Show trainer", trainer, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
       <%= link_to "Edit trainer", edit_trainer_path(trainer), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <% end %>
