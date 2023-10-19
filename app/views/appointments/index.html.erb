@@ -8,23 +8,25 @@
     <%= link_to 'New Appointment', new_trainer_appointment_path, class: 'rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium' %>
   </div>
   
-  <div id='appointments' class='min-w-full'>
-    <table class='border-collapse border border-slate-500 table-fixed w-full'>
-      <thead>
+  <div id='appointments' class='min-w-full relative overflow-x-auto'>
+    <table class='w-full text-sm text-left text-gray-500 mt-5'>
+      <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
         <tr>
-          <th class='border border-slate-600'>Trainer</th>
-          <th class='border border-slate-600'>Start Time</th>
-          <th class='border border-slate-600'>End Time</th>
-          <th class='border border-slate-600'>Action</th>
+          <th class='px-6 py-3'>Trainer</th>
+          <th class='px-6 py-3'>Date</th>
+          <th class='px-6 py-3'>Start Time</th>
+          <th class='px-6 py-3'>End Time</th>
+          <th class='px-6 py-3'>Action</th>
         </tr>
       </thead>
       <tbody>
         <% @appointments.each do |appointment| %>
-          <tr>
-            <td class='border border-slate-700'><%= appointment.trainer.name %></td>
-            <td class='border border-slate-700'><%= appointment.start_time %></td>
-            <td class='border border-slate-700'><%= appointment.end_time %></td>
-            <td class='border border-slate-600'><%= link_to 'Show', trainer_appointment_path(@trainer, appointment) %></td>
+          <tr class='bg-white border-b'>
+            <td class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'><%= appointment.trainer.name %></td>
+            <td><%= appointment.start_time.to_date %></td>
+            <td class='px-6 py-4'><%= appointment.start_time.strftime("%l:%M %p") %></td>
+            <td class='px-6 py-4'><%= appointment.end_time.strftime("%l:%M %p") %></td>
+            <td class='px-6 py-4'><%= link_to 'Show', trainer_appointment_path(@trainer, appointment) %></td>
           </tr>
         <% end %>
       </tbody>
