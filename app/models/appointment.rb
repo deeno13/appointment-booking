@@ -24,7 +24,7 @@ class Appointment < ApplicationRecord
 
   def no_overlapping_appointments
     if trainer && overlaps_with_existing_appointment?
-      errors.add(:base, 'Appointment overlaps with existing appointment')
+      errors.add(:base, 'Appointment slot is already taken')
     end
   end
 
