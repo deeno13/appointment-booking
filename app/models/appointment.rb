@@ -6,6 +6,7 @@ class Appointment < ApplicationRecord
 
   validate :start_time_cannot_be_in_the_past
   validate :end_time_after_start_time
+  validate :no_overlapping_appointments
 
   private
 
@@ -19,5 +20,22 @@ class Appointment < ApplicationRecord
     if end_time <= start_time
       errors.add(:end_time, "must be after the start time")
     end
+  end
+
+  def no_overlapping_appointments
+    if trainer && overlaps_with_existing_appointment?
+      errors.add(:base, 'Appointment overlaps with existing appointment')
+    end
+  end
+
+  def overlaps_with_existing_appointment?
+    existing_appointments = trainer.appointments.where.not(id: id)
+    overlapping_appointments = existing_appointments.where(
+      '(? <= end_time) AND (? >= start_time)',
+      end_time,
+      start_time
+    )
+
+    overlapping_appointments.exists?
   end
 end
