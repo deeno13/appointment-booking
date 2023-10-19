@@ -4,9 +4,14 @@ class Appointment < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, presence: true
 
+  validate :start_time_cannot_be_in_the_past
   validate :end_time_after_start_time
 
   private
+
+  def start_time_cannot_be_in_the_past
+    errors.add(:start_time, "cannot be in the past") if start_time.present? && start_time < Time.now
+  end
 
   def end_time_after_start_time
     return if end_time.blank? || start_time.blank?
