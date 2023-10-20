@@ -5,19 +5,59 @@
     <table class='w-full text-sm text-left text-gray-500'>
       <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
         <tr>
-          <th class='px-6 py-3'>Day of Week</th>
-          <th class='px-6 py-3'>Start Time</th>
-          <th class='px-6 py-3'>End Time</th>
+          <th class='px-6 py-3'>Sunday</th>
+          <th class='px-6 py-3'>Monday</th>
+          <th class='px-6 py-3'>Tuesday</th>
+          <th class='px-6 py-3'>Wednesday</th>
+          <th class='px-6 py-3'>Thursday</th>
+          <th class='px-6 py-3'>Friday</th>
+          <th class='px-6 py-3'>Saturday</th>
         </tr>
       </thead>
       <tbody>
-        <% @trainer.availabilities.each do |availability| %>
-          <tr class='bg-white border-b'>
-            <td class='px-6 py-4'><%= availability.day_of_week %></td>
-            <td class='px-6 py-4'><%= availability.start_time.strftime("%l:%M %p") %></td>
-            <td class='px-6 py-4'><%= availability.end_time.strftime("%l:%M %p") %></td>
-          </tr>
-        <% end %>
+        <tr class='bg-white border-b'>
+          <% availability_slots = {} %>
+
+          <% @trainer.availabilities.each do |availability| %>
+            <% day_of_week = availability.day_of_week %>
+
+            <% availability_slots[day_of_week] ||= [] %>
+
+            <% current_time = availability.start_time %>
+            <% while current_time < availability.end_time %>
+              <% availability_slots[day_of_week] << current_time.strftime('%I:%M %p') %>
+              <% current_time += 1.hour %>
+            <% end %>
+          <% end %>
+
+          <% if @trainer.appointments.any? %>
+            <% @trainer.appointments.each do |appointment| %>
+              <% next unless appointment.start_time && appointment.end_time %>
+              
+              
+              <% day_of_week = appointment.start_time.wday %>
+
+              <% availability_slots[day_of_week] ||= [] %>
+
+              <% current_time = appointment.start_time %>
+              <% while current_time < appointment.end_time %>
+                <% availability_slots[day_of_week].delete(current_time.strftime('%I:%M %p')) %>
+                <% current_time += 1.hour %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <% (0..6).each do |day_index| %>
+            <td name="time_slot">
+              <% day = Date::DAYNAMES[day_index] %>
+              <% hourly_intervals = availability_slots[day_index] || [] %>
+
+              <% hourly_intervals.each do |h| %>
+                <p><%= h %></p>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
       </tbody>
     </table>
   </div>
