@@ -1,4 +1,4 @@
-<%= form_with model: [@trainer, @appointment], class: 'contents' do |f| %>
+<%= form_with model: [@trainer, @appointment], data: { controller: 'flatpickr' }, class: 'contents' do |f| %>
   <% if @appointment.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this blog from being saved:</h2>
@@ -19,7 +19,7 @@
 
   <div class='my-5'>
     <%= f.label :end_time %>
-    <%= f.datetime_field :end_time, step: 3600, class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
+    <%= f.datetime_field :end_time, class: 'block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
     <%= inline_errors(@appointment, :end_time) %>
   </div>
 
