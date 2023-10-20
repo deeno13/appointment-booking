@@ -7,6 +7,7 @@ class Appointment < ApplicationRecord
   validate :start_time_cannot_be_in_the_past
   validate :end_time_after_start_time
   validate :no_overlapping_appointments
+  validate :within_trainer_availability
 
   private
 
@@ -23,6 +24,7 @@ class Appointment < ApplicationRecord
   end
 
   def no_overlapping_appointments
+    return if end_time.blank? || start_time.blank?
     if trainer && overlaps_with_existing_appointment?
       errors.add(:base, 'Appointment slot is already taken')
     end
@@ -37,5 +39,26 @@ class Appointment < ApplicationRecord
     )
 
     overlapping_appointments.exists?
+  end
+
+  def within_trainer_availability
+    return if end_time.blank? || start_time.blank?
+
+    availables = trainer.availabilities.where(day_of_week: start_time.wday)
+
+    start_time_only = start_time.strftime('%H:%M:%S')
+    end_time_only = end_time.strftime('%H:%M:%S')
+
+    if availables.empty?
+      errors.add(:base, "Trainer is not available on that day")
+    else
+      if start_time_only < availables.first.start_time.strftime('%H:%M:%S')
+        errors.add(:start_time, "must be within trainer's availability")
+      end
+
+      if end_time_only > availables.first.end_time.strftime('%H:%M:%S')
+        errors.add(:end_time, "must be within trainer's availability")
+      end
+    end
   end
 end
