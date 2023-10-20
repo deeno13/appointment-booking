@@ -15,45 +15,47 @@
         </tr>
       </thead>
       <tbody>
-        <tr class='bg-white border-b'>
+        <tr class='bg-white border-b align-top text-center'>
           <% availability_slots = {} %>
 
           <% @trainer.availabilities.each do |availability| %>
             <% day_of_week = availability.day_of_week %>
 
-            <% availability_slots[day_of_week] ||= [] %>
+            <% availability_slots[day_of_week] ||= {} %>
 
             <% current_time = availability.start_time %>
             <% while current_time < availability.end_time %>
-              <% availability_slots[day_of_week] << current_time.strftime('%I:%M %p') %>
+              <% availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :available %>
               <% current_time += 1.hour %>
             <% end %>
           <% end %>
 
-          <% if @trainer.appointments.any? %>
-            <% @trainer.appointments.each do |appointment| %>
-              <% next unless appointment.start_time && appointment.end_time %>
-              
-              
-              <% day_of_week = appointment.start_time.wday %>
+          <% @trainer.appointments.each do |appointment| %>
+            <% next unless appointment.start_time %>
+            <% next unless appointment.end_time %>
 
-              <% availability_slots[day_of_week] ||= [] %>
+            <% day_of_week = appointment.start_time.wday %>
 
-              <% current_time = appointment.start_time %>
-              <% while current_time < appointment.end_time %>
-                <% availability_slots[day_of_week].delete(current_time.strftime('%I:%M %p')) %>
-                <% current_time += 1.hour %>
-              <% end %>
+            <% availability_slots[day_of_week] ||= {} %>
+
+            <% current_time = appointment.start_time %>
+            <% while current_time < appointment.end_time %>
+              <% availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :unavailable %>
+              <% current_time += 1.hour %>
             <% end %>
           <% end %>
 
           <% (0..6).each do |day_index| %>
             <td name="time_slot">
               <% day = Date::DAYNAMES[day_index] %>
-              <% hourly_intervals = availability_slots[day_index] || [] %>
+              <% hourly_intervals = availability_slots[day_index] || {} %>
 
-              <% hourly_intervals.each do |h| %>
-                <p><%= h %></p>
+              <% hourly_intervals.each do |time, status| %>
+                <% if status == :available %>
+                  <p style="color: green;"><%= time %></p>
+                <% else %>
+                  <p style="color: red;"><%= time %></p>
+                <% end %>
               <% end %>
             </td>
           <% end %>
