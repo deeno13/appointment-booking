@@ -23,7 +23,7 @@
         <% @availabilities.each do |availability| %>
           <tr class='bg-white border-b'>
             <th class='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'><%= availability.trainer.name %></th>
-            <td class='px-6 py-4'><%= availability.day_of_week %></td>
+            <td class='px-6 py-4'><%= get_day_name(availability.day_of_week) %></td>
             <td class='px-6 py-4'><%= availability.start_time.strftime("%l:%M %p") %></td>
             <td class='px-6 py-4'><%= availability.end_time.strftime("%l:%M %p") %></td>
             <td class='px-6 py-4'><%= link_to 'Show', trainer_availability_path(@trainer, availability) %></td>

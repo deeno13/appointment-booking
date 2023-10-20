@@ -7,9 +7,6 @@ class Availability < ApplicationRecord
 
   validate :end_time_after_start_time
 
-
-  enum day_of_week: %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]
-
   private
 
   def end_time_after_start_time
