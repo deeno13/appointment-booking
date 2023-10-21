@@ -40,7 +40,9 @@
 
             <% current_time = appointment.start_time %>
             <% while current_time < appointment.end_time %>
-              <% availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :unavailable %>
+              <% unless appointment.id == @appointment&.id && current_time >= @appointment.start_time && current_time < @appointment.end_time %>
+                <% availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :unavailable %>
+              <% end %>
               <% current_time += 1.hour %>
             <% end %>
           <% end %>
@@ -52,8 +54,10 @@
 
               <% hourly_intervals.each do |time, status| %>
                 <% if status == :available %>
+                  <% puts '======> printing available' %>
                   <p style="color: green;"><%= time %></p>
                 <% else %>
+                  <% puts '======> printing unavailable'%>
                   <p style="color: red;"><%= time %></p>
                 <% end %>
               <% end %>
