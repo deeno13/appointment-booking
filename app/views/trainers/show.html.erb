@@ -6,7 +6,8 @@
     
     <%= render @trainer %>
 
-    <%= link_to 'Book Appointment', new_trainer_appointment_path(@trainer), class: 'mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium' %>
+    <%= link_to 'Book Appointment', new_trainer_appointment_path(@trainer), class: 'mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white font-medium' %>
+    <%= link_to 'Show Availabilities', trainer_availabilities_path(@trainer), class: 'mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white font-medium' %>
     <%= link_to 'Edit trainer', edit_trainer_path(@trainer), class: 'mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
     <div class='inline-block ml-2'>
       <%= button_to 'Destroy trainer', trainer_path(@trainer), method: :delete, class: 'mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium' %>
