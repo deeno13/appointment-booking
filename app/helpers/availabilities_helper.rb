@@ -44,12 +44,17 @@ module AvailabilitiesHelper
     final_slots = ''
     hourly_intervals.each do |time, status|
       if status == :available
-        final_slots += "<li style='color: green;'>#{time}</li>"
+        final_slots += "<li class='w-full border border-green-200 rounded bg-green-100 py-2 px-3 text-center my-2'>#{time}</li>"
       else
-        final_slots += "<li style='color: red;'>#{time}</li>"
+        final_slots += "<li class='w-full border border-red-200 rounded bg-red-100 py-2 px-3 text-center my-2'>#{time}</li>"
       end
     end
 
-    return "<ul>#{final_slots}</ul>".html_safe
+    return "
+      <p>#{day}</p>
+      <div class='flex flex-row h-[400px] mt-2'>
+        <ul class='w-full overflow-y-auto'>#{final_slots}</ul>
+      </div>
+    ".html_safe
   end
 end
