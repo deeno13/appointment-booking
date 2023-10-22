@@ -4,11 +4,11 @@
   <% end %>
   
   <div class='flex justify-between items-center'>
-    <h1 class='font-bold text-4xl'>Trainers</h1>
-    <%= link_to 'New Trainer', new_trainer_path, class: 'rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium' %>
+    <h1 class='font-bold text-slate-500 text-2xl'>Trainers</h1>
+    <%= link_to 'New Trainer', new_trainer_path, class: 'rounded-lg py-3 px-5 bg-sky-600 hover:bg-sky-700 text-white block font-medium' %>
   </div>
   
-  <div id='trainers' class='grid grid-cols-3 min-w-full my-5 gap-5'>
+  <div id='trainers' class='grid grid-cols-3 min-w-full my-8 gap-5'>
     <%= render @trainers %>
   </div>
 </div>

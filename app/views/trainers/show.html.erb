@@ -6,12 +6,16 @@
     
     <%= render @trainer %>
 
-    <%= link_to 'Book Appointment', new_trainer_appointment_path(@trainer), class: 'mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white font-medium' %>
-    <%= link_to 'Show Availabilities', trainer_availabilities_path(@trainer), class: 'mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white font-medium' %>
-    <%= link_to 'Edit trainer', edit_trainer_path(@trainer), class: 'mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
-    <div class='inline-block ml-2'>
-      <%= button_to 'Destroy trainer', trainer_path(@trainer), method: :delete, class: 'mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium' %>
+    <div class='mt-5'>
+      <div class='flex flex-row w-full gap-3'>
+        <%= link_to 'Show Appointments', trainer_appointments_path(@trainer), class: 'w-full text-center mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white font-medium' %>
+        <%= link_to 'Show Availabilities', trainer_availabilities_path(@trainer), class: 'w-full text-center mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white font-medium' %>
+      </div>
+      <div class='flex flex-row gap-3 mt-3'>
+        <%= link_to 'Edit', edit_trainer_path(@trainer), class: 'w-full text-center rounded-lg py-3 px-5 bg-gray-100 font-medium' %>
+        <%= button_to 'Destroy', trainer_path(@trainer), method: :delete, class: 'w-full rounded-lg py-3 px-5 bg-gray-100 font-medium', form: { class: 'w-full' } %>
+        <%= link_to 'Back to trainers', trainers_path, class: 'w-full text-center rounded-lg py-3 px-5 bg-gray-100 font-medium' %>
+      </div>
     </div>
-    <%= link_to 'Back to trainers', trainers_path, class: 'ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
   </div>
 </div>

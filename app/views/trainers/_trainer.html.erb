@@ -13,8 +13,10 @@
       <%= link_to 'Book Appointment', new_trainer_appointment_path(trainer, params: { date: Date.today.strftime("%Y-%m-%d")}), class: 'rounded-lg py-3 px-5 text-slate-700 bg-gray-100 inline-block font-medium' %>
       </div>
     <% elsif action_name != 'show'%>
-      <%= link_to "Show trainer", trainer, class: "rounded-lg py-3 px-5 bg-stone-100 inline-block font-medium" %>
-      <%= link_to "Edit trainer", edit_trainer_path(trainer), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+      <div class='flex flex-row justify-end'>
+        <%= link_to "Show", trainer, class: "rounded-lg py-3 px-5 bg-stone-100 font-medium" %>
+        <%= link_to "Edit", edit_trainer_path(trainer), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 font-medium" %>
+      </div>
     <% end %>
   </div>
 </div>
