@@ -2,6 +2,10 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="appointments"
 export default class extends Controller {
+  connect() {
+    Turbo.visit(newUrl, { frame: "slots" });
+  }
+
   addDateQueryParam(event) {
     const newUrl = new URL(window.location.href);
     const dateTime = document.getElementById("appointment_start_time").value;
