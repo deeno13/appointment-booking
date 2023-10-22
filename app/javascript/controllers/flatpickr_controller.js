@@ -14,10 +14,15 @@ export default class extends Controller {
       inline: true,
       minuteIncrement: 60,
       disableMobile: true,
-      defaultDate: this.setDefaultDateTime(),
+      defaultDate: this.getDateParam(),
     });
 
     this.setEndTime();
+  }
+
+  getDateParam() {
+    const url = new URL(window.location.href);
+    return new Date(url.searchParams.get("date"));
   }
 
   getCurrentDateTime() {

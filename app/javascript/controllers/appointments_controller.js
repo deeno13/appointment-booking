@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus";
 // Connects to data-controller="appointments"
 export default class extends Controller {
   connect() {
-    Turbo.visit(newUrl, { frame: "slots" });
+    Turbo.visit(window.location.href, { frame: "slots" });
   }
 
   addDateQueryParam(event) {
