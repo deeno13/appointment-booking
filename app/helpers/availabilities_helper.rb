@@ -7,7 +7,7 @@ module AvailabilitiesHelper
     end
   end
 
-  def availability_slots(t, a)
+  def availability_slots(t, a, d)
     availability_slots = {}
 
     t.availabilities.each do |availability|
@@ -22,9 +22,8 @@ module AvailabilitiesHelper
       end
     end
 
-    t.appointments.each do |appointment|
+    t.appointments.where('DATE(start_time) = ?', Date.parse(d)).each do |appointment|
       next unless appointment.start_time
-      next unless appointment.end_time
 
       day_of_week = appointment.start_time.wday
 

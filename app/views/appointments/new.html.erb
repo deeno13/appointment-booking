@@ -9,7 +9,7 @@
     </div>
     <div class='flex-1 p-5'>
       <%= turbo_frame_tag :slots do %>
-        <%= availability_slots(@trainer, @appointment) %>
+        <%= availability_slots(@trainer, @appointment, @date_param) %>
       <% end %>
     </div>
   </div>
