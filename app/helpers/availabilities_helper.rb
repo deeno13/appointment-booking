@@ -6,4 +6,50 @@ module AvailabilitiesHelper
       return days_of_week[day_number]
     end
   end
+
+  def availability_slots(t, a)
+    availability_slots = {}
+
+    t.availabilities.each do |availability|
+      day_of_week = availability.day_of_week
+
+      availability_slots[day_of_week] ||= {}
+
+      current_time = availability.start_time
+      while current_time < availability.end_time
+        availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :available
+        current_time += 1.hour
+      end
+    end
+
+    t.appointments.each do |appointment|
+      next unless appointment.start_time
+      next unless appointment.end_time
+
+      day_of_week = appointment.start_time.wday
+
+      availability_slots[day_of_week] ||= {}
+
+      current_time = appointment.start_time
+      while current_time < appointment.end_time
+        unless appointment.id == a&.id && current_time >= a.start_time && current_time < a.end_time
+          availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :unavailable
+        end
+        current_time += 1.hour
+      end
+    end
+
+    day = Date::DAYNAMES[@wday]
+    hourly_intervals = availability_slots[@wday] || {}
+    final_slots = ''
+    hourly_intervals.each do |time, status|
+      if status == :available
+        final_slots += "<li style='color: green;'>#{time}</li>"
+      else
+        final_slots += "<li style='color: red;'>#{time}</li>"
+      end
+    end
+
+    return "<ul>#{final_slots}</ul>".html_safe
+  end
 end
