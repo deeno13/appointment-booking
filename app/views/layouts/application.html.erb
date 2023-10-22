@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class='scroll-smooth'>
   <head>
     <title>AppointmentBooking</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -12,10 +12,17 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= render 'shared/navbar' %>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class='bg-stone-50'>
+    <header class='max-w-5xl mx-auto mt-6'>
+      <%= render 'shared/navbar' %>
+    </header>
+
+    <main class="max-w-5xl mx-auto mt-20 px-5 flex">
       <%= yield %>
     </main>
+
+    <footer class='max-w-5xl mx-auto mt-28'>
+      <%= render 'shared/footer' %>
+    </footer>
   </body>
 </html>

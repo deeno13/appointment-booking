@@ -1,17 +1,19 @@
 <div id='<%= dom_id trainer %>'>  
-  <div class='p-6 bg-white border border-gray-200 rounded-lg shadow'>
+  <div class='p-6 bg-white border border-gray-200 rounded-lg shadow-md'>
     <%= link_to trainer do %>
-      <h5 class='mb-2 text-2xl font-bold tracking-tight text-gray-900 hover:text-blue-800'>
+      <h5 class='mb-2 text-xl font-semibold tracking-tight text-slate-600 hover:text-blue-800'>
         <%= trainer.name %>
       </h5>
     <% end %>
 
-    <p class="mb-3 font-normal text-gray-700">This trainer is dedicated and works hard to help a trainee.</p>
+    <p class="mb-6 font-normal text-slate-500">This trainer is dedicated and works hard to help a trainee.</p>
 
     <% if action_name == 'home' %>
-      <%= link_to 'Book Appointment', new_trainer_appointment_path(trainer, params: { date: Date.today.strftime("%Y-%m-%d")}), class: 'rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
+      <div class='flex justify-end'>
+      <%= link_to 'Book Appointment', new_trainer_appointment_path(trainer, params: { date: Date.today.strftime("%Y-%m-%d")}), class: 'rounded-lg py-3 px-5 text-slate-700 bg-gray-100 inline-block font-medium' %>
+      </div>
     <% elsif action_name != 'show'%>
-      <%= link_to "Show trainer", trainer, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      <%= link_to "Show trainer", trainer, class: "rounded-lg py-3 px-5 bg-stone-100 inline-block font-medium" %>
       <%= link_to "Edit trainer", edit_trainer_path(trainer), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <% end %>
   </div>

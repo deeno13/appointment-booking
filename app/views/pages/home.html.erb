@@ -1,7 +1,25 @@
-<div>
-  <h1 class="font-bold text-4xl">Appointment Booking System</h1>
+<div class=''>
 
-  <div id='trainers' class='grid grid-cols-3 min-w-full my-5 gap-5'>
-    <%= render @trainers %>
-  </div>  
+  <section class='flex flex-row gap-16'>
+    <div class='basis-1/2'>
+      <h1 class="font-bold text-4xl text-slate-700 leading-snug">
+        Where Your Journey to a <span class='bg-emerald-600 text-white px-2'>Healthier You</span> Begins!
+        </h1>
+      <p class='font-medium text-xl text-slate-500 mt-4'>Seamless Appointment Booking for Personal Training Excellence</p>
+      <p class='font-medium text-lg text-slate-500 mt-6'>Your ultimate destination for hassle-free appointment scheduling with top-notch trainers. Because your journey to a healthier, fitter you should be as easy as a click away.</p>
+    </div>
+    <div class='basis-1/2'>
+    <%= image_tag('people-enjoying-yoga-retreat.jpg', class: 'rounded-lg mt-3 shadow-lg') %>
+    </div>
+  </section>
+
+  <section class='min-w-full mt-28'>
+    <h2 class='font-semibold text-2xl text-slate-700'>Your Journey to a Healthier, Happier You Starts Now</h2>
+    <p class='font-medium text-lg text-slate-500 mt-4'>Book an appointment with our awesome trainers!</p>
+
+    <div id='trainers' class='grid grid-cols-3 gap-5 mt-6'>
+      <%= render @trainers %>
+    </div>  
+  </section>
+
 </div>
