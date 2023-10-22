@@ -14,15 +14,14 @@
 
   <body class='bg-stone-50'>
     <header class='max-w-5xl mx-auto mt-6'>
-      <%= render 'shared/navbar' %>
+      <%= render 'shared/navbar' unless controller_name == 'appointments' && action_name == 'show' %>
     </header>
-
-    <main class="max-w-5xl mx-auto mt-20 px-5 flex">
+    <main class="max-w-5xl mx-auto mt-20 px-5">
       <%= yield %>
     </main>
 
     <footer class='max-w-5xl mx-auto mt-28'>
-      <%= render 'shared/footer' %>
+      <%= render 'shared/footer' unless controller_name == 'appointments' && action_name == 'show'  %>
     </footer>
   </body>
 </html>
