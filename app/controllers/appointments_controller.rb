@@ -11,7 +11,6 @@ class AppointmentsController < ApplicationController
 
   def new
     @appointment = @trainer.appointments.new
-    @availability_slots = @trainer.weekly_availability
     @date_param = params[:date] || Date.today.to_s
     @wday = Date.parse(@date_param).wday
   end
