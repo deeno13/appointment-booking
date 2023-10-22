@@ -21,7 +21,7 @@ class AppointmentsController < ApplicationController
     @wday = Date.parse(@date_param).wday
 
     if @appointment.save
-      redirect_to trainer_appointments_path(@trainer), notice: 'Appointment was successfully created.'
+      redirect_to trainer_appointment_path(@trainer, @appointment), notice: 'Appointment was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
