@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class='my-5'>
+  <div>
     <%= f.datetime_field :start_time, data: { action: 'change->flatpickr#setEndTime change->appointments#addDateQueryParam'}, class: 'start-time-field' %>
     <%= inline_errors(@appointment, :start_time) %>
   </div>
@@ -19,7 +19,7 @@
   <%= f.hidden_field :end_time, class: 'end-time-field' %>
   <%= inline_errors(@appointment, :end_time) %>
 
-  <div class='inline'>
-    <%= f.submit class: 'rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer' %>
+  <div class='mt-5'>
+    <%= f.submit class: 'rounded-lg py-3 px-5 bg-blue-600 text-white w-full font-medium cursor-pointer' %>
   </div>
 <% end %>

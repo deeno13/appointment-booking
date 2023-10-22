@@ -2,12 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
+.flatpickr-calendar,
+.flatpickr-innerContainer,
+.flatpickr-rContainer,
+.flatpickr-days,
+.dayContainer,
+.flatpickr-day {
+  @apply w-full min-w-full !important;
 }
 
-*/
+.flatpickr-calendar {
+  @apply shadow-none !important;
+}
+
+.dayContainer {
+  @apply grid grid-cols-7 !important;
+}
