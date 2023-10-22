@@ -2,7 +2,9 @@
   <h1 class='font-bold text-4xl'>Book an appointment with <%= @trainer.name %></h1>
 
   <div class='my-5'>
-    <%= availability_slots(@trainer, @appointment) %>
+    <%= turbo_frame_tag :slots do%>
+      <%= availability_slots(@trainer, @appointment) %>
+    <% end %>
   </div>
 
   <%= render 'form', appointment: @appointment %>
