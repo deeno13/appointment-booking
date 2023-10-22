@@ -16,7 +16,7 @@
     <%= inline_errors(@appointment, :start_time) %>
   </div>
 
-  <%= f.hidden_field :end_time %>
+  <%= f.hidden_field :end_time, class: 'end-time-field' %>
   <%= inline_errors(@appointment, :end_time) %>
 
   <div class='inline'>
