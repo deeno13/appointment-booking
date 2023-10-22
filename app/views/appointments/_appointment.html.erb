@@ -1,24 +1,22 @@
 <div id='<%= dom_id appointment %>'>
-  <table class='border-collapse border border-slate-500 table-fixed w-full'>
-    <thead>
-      <tr>
-        <th class='border border-slate-600'>Trainer</th>
-        <th class='border border-slate-600'>Start Time</th>
-        <th class='border border-slate-600'>End Time</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class='border border-slate-700'><%= appointment.trainer.name %></td>
-        <td class='border border-slate-700'><%= appointment.start_time %></td>
-        <td class='border border-slate-700'><%= appointment.end_time %></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <% if action_name != "show" %>
-    <%= link_to "Show appointment", appointment, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit appointment", edit_appointment_path(appointment), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class='mt-6'>
-  <% end %>
+  <div class='border border-gray-200 bg-white shadow-lg rounded-lg px-10 py-14'>
+    <div class='border-b-2 border-gray-200 pb-8'>
+      <h2 class='text-2xl text-slate-700 font-bold text-center'>Appointment Booked!</h2>
+    </div>
+    <div class='border-b-2 border-gray-200 pb-8 my-8'>
+      <div class="grid grid-cols-5 grid-rows-2">
+          <div class='col-span-2 font-semibold text-slate-700'>Trainer</div>
+          <div class='col-span-3 font-medium text-slate-500'><%= appointment.trainer.name %></div>
+          <div class='col-span-2 font-semibold text-slate-700'>Date & Time</div> 
+          <div class='col-span-3 font-medium text-slate-500'>
+            <p><%= appointment.start_time.strftime("%A, %B %e, %Y") %></p>
+            <p><%= appointment.start_time.strftime("%l:%M %p") %> to <%= appointment.end_time.strftime("%l:%M %p") %></p>
+          </div>
+      </div>
+    </div>
+    <div class='flex flex-row justify-end gap-x-4'>
+      <%= link_to "Edit", edit_trainer_appointment_path(@trainer, @appointment), class: "basis-1/5 mt-2 rounded-lg py-3 px-5 bg-gray-100 inline font-medium text-center" %>
+      <%= button_to "Cancel", trainer_appointment_path(@trainer, @appointment), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-red-500 hover:bg-red-600 text-white font-medium w-full", form: { data: { turbo_confirm: "Cancel appointment?" }, class: "basis-1/5 flex-grow-0" } %>
+    </div>
+  </div>
 </div>
