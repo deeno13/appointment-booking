@@ -12,16 +12,12 @@
   <% end %>
 
   <div class='my-5'>
-    <%= f.label :start_time %>
-    <%= f.datetime_field :start_time, data: { action: 'change->flatpickr#setEndTime change->appointments#addDateQueryParam'}, class: 'start-time-field block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
+    <%= f.datetime_field :start_time, data: { action: 'change->flatpickr#setEndTime change->appointments#addDateQueryParam'}, class: 'start-time-field' %>
     <%= inline_errors(@appointment, :start_time) %>
   </div>
 
-  <div class='my-5'>
-    <%= f.label :end_time %>
-    <%= f.datetime_field :end_time, class: 'end-time-field block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full' %>
-    <%= inline_errors(@appointment, :end_time) %>
-  </div>
+  <%= f.hidden_field :end_time %>
+  <%= inline_errors(@appointment, :end_time) %>
 
   <div class='inline'>
     <%= f.submit class: 'rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer' %>
