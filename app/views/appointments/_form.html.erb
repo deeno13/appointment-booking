@@ -1,8 +1,6 @@
-<%= form_with model: [@trainer, @appointment], data: { controller: 'flatpickr appointments' }, class: 'contents' do |f| %>
+<%= form_with model: [@trainer, @appointment], data: { controller: "flatpickr appointments" }, class: "flex flex-col justify-between h-full" do |f| %>
   <% if @appointment.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this blog from being saved:</h2>
-
       <ul>
         <% @appointment.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -12,14 +10,12 @@
   <% end %>
 
   <div>
-    <%= f.datetime_field :start_time, data: { action: 'change->flatpickr#setEndTime change->appointments#addDateQueryParam'}, class: 'start-time-field' %>
-    <%= inline_errors(@appointment, :start_time) %>
+    <%= f.datetime_field :start_time, data: { action: "change->flatpickr#setEndTime change->appointments#addDateQueryParam" }, class: "start-time-field" %>
   </div>
 
-  <%= f.hidden_field :end_time, class: 'end-time-field' %>
-  <%= inline_errors(@appointment, :end_time) %>
+  <%= f.hidden_field :end_time, class: "end-time-field" %>
 
   <div class='mt-5'>
-    <%= f.submit class: 'rounded-lg py-3 px-5 bg-blue-600 text-white w-full font-medium cursor-pointer' %>
+    <%= f.submit "Book Appointment", class: "rounded-lg py-3 px-5 bg-sky-600 hover:bg-sky-700 text-white w-full font-medium cursor-pointer" %>
   </div>
 <% end %>
