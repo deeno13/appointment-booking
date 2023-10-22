@@ -2,70 +2,49 @@
   <h1 class='font-bold text-4xl'>Book an appointment with <%= @trainer.name %></h1>
 
   <div class='my-5'>
-    <table class='w-full text-sm text-left text-gray-500'>
-      <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
-        <tr>
-          <th class='px-6 py-3'>Sunday</th>
-          <th class='px-6 py-3'>Monday</th>
-          <th class='px-6 py-3'>Tuesday</th>
-          <th class='px-6 py-3'>Wednesday</th>
-          <th class='px-6 py-3'>Thursday</th>
-          <th class='px-6 py-3'>Friday</th>
-          <th class='px-6 py-3'>Saturday</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class='bg-white border-b align-top text-center'>
-          <% availability_slots = {} %>
+    <% availability_slots = {} %>
 
-          <% @trainer.availabilities.each do |availability| %>
-            <% day_of_week = availability.day_of_week %>
+    <% @trainer.availabilities.each do |availability| %>
+      <% day_of_week = availability.day_of_week %>
 
-            <% availability_slots[day_of_week] ||= {} %>
+      <% availability_slots[day_of_week] ||= {} %>
 
-            <% current_time = availability.start_time %>
-            <% while current_time < availability.end_time %>
-              <% availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :available %>
-              <% current_time += 1.hour %>
-            <% end %>
-          <% end %>
+      <% current_time = availability.start_time %>
+      <% while current_time < availability.end_time %>
+        <% availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :available %>
+        <% current_time += 1.hour %>
+      <% end %>
+    <% end %>
 
-          <% @trainer.appointments.each do |appointment| %>
-            <% next unless appointment.start_time %>
-            <% next unless appointment.end_time %>
+    <% @trainer.appointments.each do |appointment| %>
+      <% next unless appointment.start_time %>
+      <% next unless appointment.end_time %>
 
-            <% day_of_week = appointment.start_time.wday %>
+      <% day_of_week = appointment.start_time.wday %>
 
-            <% availability_slots[day_of_week] ||= {} %>
+      <% availability_slots[day_of_week] ||= {} %>
 
-            <% current_time = appointment.start_time %>
-            <% while current_time < appointment.end_time %>
-              <% unless appointment.id == @appointment&.id && current_time >= @appointment.start_time && current_time < @appointment.end_time %>
-                <% availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :unavailable %>
-              <% end %>
-              <% current_time += 1.hour %>
-            <% end %>
-          <% end %>
+      <% current_time = appointment.start_time %>
+      <% while current_time < appointment.end_time %>
+        <% unless appointment.id == @appointment&.id && current_time >= @appointment.start_time && current_time < @appointment.end_time %>
+          <% availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :unavailable %>
+        <% end %>
+        <% current_time += 1.hour %>
+      <% end %>
+    <% end %>
 
-          <% (0..6).each do |day_index| %>
-            <td name="time_slot">
-              <% day = Date::DAYNAMES[day_index] %>
-              <% hourly_intervals = availability_slots[day_index] || {} %>
+    <turbo-frame id='slots'>
+      <% day = Date::DAYNAMES[@wday] %>
+      <% hourly_intervals = availability_slots[@wday] || {} %>
 
-              <% hourly_intervals.each do |time, status| %>
-                <% if status == :available %>
-                  <% puts '======> printing available' %>
-                  <p style="color: green;"><%= time %></p>
-                <% else %>
-                  <% puts '======> printing unavailable'%>
-                  <p style="color: red;"><%= time %></p>
-                <% end %>
-              <% end %>
-            </td>
-          <% end %>
-        </tr>
-      </tbody>
-    </table>
+      <% hourly_intervals.each do |time, status| %>
+        <% if status == :available %>
+          <p style="color: green;"><%= time %></p>
+        <% else %>
+          <p style="color: red;"><%= time %></p>
+        <% end %>
+      <% end %>
+    </turbo-frame>
   </div>
 
   <%= render 'form', appointment: @appointment %>
