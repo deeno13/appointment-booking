@@ -12,12 +12,15 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = @trainer.appointments.new
     @availability_slots = @trainer.weekly_availability
-    @date_param = params[:date]
+    @date_param = params[:date] || Date.today.to_s
     @wday = Date.parse(@date_param).wday
   end
 
   def create
     @appointment = @trainer.appointments.new(appointment_params)
+    @date_param = params[:date] || Date.today.to_s
+    @wday = Date.parse(@date_param).wday
+
     if @appointment.save
       redirect_to trainer_appointments_path(@trainer), notice: 'Appointment was successfully created.'
     else
