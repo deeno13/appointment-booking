@@ -16,6 +16,8 @@ export default class extends Controller {
       disableMobile: true,
       defaultDate: this.setDefaultDateTime(),
     });
+
+    this.setEndTime();
   }
 
   getCurrentDateTime() {
