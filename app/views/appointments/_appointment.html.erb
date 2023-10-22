@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class='flex flex-row justify-end gap-x-4'>
-      <%= link_to "Edit", edit_trainer_appointment_path(@trainer, @appointment), class: "basis-1/5 mt-2 rounded-lg py-3 px-5 bg-gray-100 inline font-medium text-center" %>
+      <%= link_to "Edit", edit_trainer_appointment_path(@trainer, @appointment, params: { date: Date.today.strftime("%Y-%m-%d")}), class: "basis-1/5 mt-2 rounded-lg py-3 px-5 bg-gray-100 inline font-medium text-center" %>
       <%= button_to "Cancel", trainer_appointment_path(@trainer, @appointment), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-red-500 hover:bg-red-600 text-white font-medium w-full", form: { data: { turbo_confirm: "Cancel appointment?" }, class: "basis-1/5 flex-grow-0" } %>
     </div>
   </div>

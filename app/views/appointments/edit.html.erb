@@ -1,8 +1,16 @@
-<div class='mx-auto md:w-2/3 w-full'>
-  <h1 class='font-bold text-4xl'>Editing appointment</h1>
-
-  <%= render 'form', appointment: @appointment %>
-
-  <%= link_to 'Show appointment', trainer_appointment_path(@trainer, @appointment), class: 'ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
-  <%= link_to 'Back to appointments', trainer_appointments_path, class: 'ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
+<div class='mx-auto w-full'>
+  <div class='flex md:flex-row flex-col shadow rounded-md border border-gray-200 bg-white outline-none'>
+    <div class='flex-1 border-r border-r-gray-200 p-5'>
+      <h3 class='font-medium text-slate-500'><%= @trainer.name %></h3>
+      <h2 class='font-semibold text-xl text-slate-700'>1-hour appointment</h2>
+    </div>
+    <div class='basis-2/5 border-r border-r-gray-200 p-5'>
+      <%= render "form", appointment: @appointment %>
+    </div>
+    <div class='flex-1 p-5'>
+      <%= turbo_frame_tag :slots do %>
+        <%= availability_slots(@trainer, @appointment, @date_param) %>
+      <% end %>
+    </div>
+  </div>
 </div>

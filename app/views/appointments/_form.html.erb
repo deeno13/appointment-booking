@@ -16,6 +16,10 @@
   <%= f.hidden_field :end_time, class: "end-time-field" %>
 
   <div class='mt-5'>
-    <%= f.submit "Book Appointment", class: "rounded-lg py-3 px-5 bg-sky-600 hover:bg-sky-700 text-white w-full font-medium cursor-pointer" %>
+    <% if action_name == 'new' %>
+      <%= f.submit "Book Appointment", class: "rounded-lg py-3 px-5 bg-sky-600 hover:bg-sky-700 text-white w-full font-medium cursor-pointer" %>
+    <% elsif action_name == 'edit' %>
+      <%= f.submit "Update Appointment", class: "rounded-lg py-3 px-5 bg-sky-600 hover:bg-sky-700 text-white w-full font-medium cursor-pointer" %>
+    <% end %>
   </div>
 <% end %>

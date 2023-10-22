@@ -28,6 +28,8 @@ class AppointmentsController < ApplicationController
   end
 
   def edit
+    @date_param = params[:date] || Date.today.to_s
+    @wday = Date.parse(@date_param).wday
   end
 
   def update
