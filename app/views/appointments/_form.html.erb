@@ -10,15 +10,17 @@
   <% end %>
 
   <div>
+    <%# Whenever the the value is changed, automatically set end time, and update the date query param in the address bar %>
     <%= f.datetime_field :start_time, data: { action: "change->flatpickr#setEndTime change->appointments#addDateQueryParam" }, class: "start-time-field" %>
   </div>
 
+  <%# Since the end time is set automatically, it is set to be a hidden field instead %>
   <%= f.hidden_field :end_time, class: "end-time-field" %>
 
   <div class='mt-5'>
-    <% if action_name == 'new' %>
+    <% if action_name == 'new' ||   action_name == 'create' %>
       <%= f.submit "Book Appointment", class: "rounded-lg py-3 px-5 bg-sky-600 hover:bg-sky-700 text-white w-full font-medium cursor-pointer" %>
-    <% elsif action_name == 'edit' %>
+    <% elsif action_name == 'edit' || action_name = 'update' %>
       <%= f.submit "Update Appointment", class: "rounded-lg py-3 px-5 bg-sky-600 hover:bg-sky-700 text-white w-full font-medium cursor-pointer" %>
     <% end %>
   </div>

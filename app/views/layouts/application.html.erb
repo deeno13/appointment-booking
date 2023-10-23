@@ -13,15 +13,18 @@
   </head>
 
   <body class='flex flex-col h-screen justify-between bg-stone-50'>
+    <%# Hide header if in appointment show page %>
     <% unless controller_name == 'appointments' && action_name == 'show' %>
       <header class='max-w-5xl mx-auto mt-6 w-full'>
         <%= render 'shared/navbar' %>
       </header>
     <% end %>
+
     <main class="max-w-5xl mx-auto mt-20 px-5 w-full">
       <%= yield %>
     </main>
     
+    <%# Hide footer if in appointment show page %>
     <% unless controller_name == 'appointments' && action_name == 'show' %>
       <footer class='max-w-5xl mx-auto mt-28 w-full'>
         <%= render 'shared/footer'  %>

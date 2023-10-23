@@ -1,4 +1,6 @@
 module AvailabilitiesHelper
+
+  # Since day_of_week is an integer, we need to convert it to day name for readability
   def get_day_name(day_number)
     days_of_week = %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]
 
@@ -10,11 +12,16 @@ module AvailabilitiesHelper
   def availability_slots(t, a, d)
     availability_slots = {}
 
+    # Get all the availabilities for the trainer
     t.availabilities.each do |availability|
       day_of_week = availability.day_of_week
 
+      # Initialize the availability_slots hash with the day_of_week as the key
+      # and an empty hash as the value if it is not already initialized
       availability_slots[day_of_week] ||= {}
 
+      # Loop through the availability start time and end time and add them in 1 hour intervals
+      # to the availability_slots hash with the status of :available
       current_time = availability.start_time
       while current_time < availability.end_time
         availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :available
@@ -22,13 +29,17 @@ module AvailabilitiesHelper
       end
     end
 
+    # Get all the appointments for the trainer where the date matches the date param
     t.appointments.where('DATE(start_time) = ?', Date.parse(d)).each do |appointment|
+      # Skip the appointment if the start_time is not set (can't figure out why this is happening)
       next unless appointment.start_time
 
       day_of_week = appointment.start_time.wday
 
       availability_slots[day_of_week] ||= {}
 
+      # Loop through the appointment start time and end time and add them in 1 hour intervals
+      # to the availability_slots hash with the status of :unavailable
       current_time = appointment.start_time
       while current_time < appointment.end_time
         unless appointment.id == a&.id && current_time >= a.start_time && current_time < a.end_time
@@ -38,21 +49,29 @@ module AvailabilitiesHelper
       end
     end
 
+    # Get the day integer for the date param
     day = Date::DAYNAMES[@wday]
+
+    # Set the hourly intervals for the day to an empty hash if there are no availabilities and appointments
     hourly_intervals = availability_slots[@wday] || {}
-    final_slots = ''
+    slots_list = ''
+
+    # Set availabilities as green and unavailabilities as red
     hourly_intervals.each do |time, status|
       if status == :available
-        final_slots += "<li class='w-full border border-green-200 rounded bg-green-100 py-2 px-3 text-center my-2'>#{time}</li>"
+        slots_list += "<li class='w-full border border-green-200 rounded bg-green-100 py-2 px-3 text-center my-2'>#{time}</li>"
       else
-        final_slots += "<li class='w-full border border-red-200 rounded bg-red-100 py-2 px-3 text-center my-2'>#{time}</li>"
+        slots_list += "<li class='w-full border border-red-200 rounded bg-red-100 py-2 px-3 text-center my-2'>#{time}</li>"
       end
     end
 
+    # Return the day name and the final list of slots
     return "
       <p>#{day}</p>
       <div class='flex flex-row h-[400px] mt-2'>
-        <ul class='w-full overflow-y-auto'>#{final_slots}</ul>
+        <ul class='w-full overflow-y-auto'>
+          #{slots_list}
+        </ul>
       </div>
     ".html_safe
   end

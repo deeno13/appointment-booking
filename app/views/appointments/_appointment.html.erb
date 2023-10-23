@@ -5,13 +5,13 @@
     </div>
     <div class='border-b-2 border-gray-200 pb-8 my-8'>
       <div class="grid grid-cols-5 grid-rows-2">
-          <div class='col-span-2 font-semibold text-slate-700'>Trainer</div>
-          <div class='col-span-3 font-medium text-slate-500'><%= appointment.trainer.name %></div>
-          <div class='col-span-2 font-semibold text-slate-700'>Date & Time</div> 
-          <div class='col-span-3 font-medium text-slate-500'>
-            <p><%= appointment.start_time.strftime("%A, %B %e, %Y") %></p>
-            <p><%= appointment.start_time.strftime("%l:%M %p") %> to <%= appointment.end_time.strftime("%l:%M %p") %></p>
-          </div>
+        <div class='col-span-2 font-semibold text-slate-700'>Trainer</div>
+        <div class='col-span-3 font-medium text-slate-500'><%= appointment.trainer.name %></div>
+        <div class='col-span-2 font-semibold text-slate-700'>Date & Time</div> 
+        <div class='col-span-3 font-medium text-slate-500'>
+          <p><%= appointment.start_time.strftime("%A, %B %e, %Y") %></p>
+          <p><%= appointment.start_time.strftime("%l:%M %p") %> to <%= appointment.end_time.strftime("%l:%M %p") %></p>
+        </div>
       </div>
     </div>
     <div class='flex flex-row justify-end gap-x-4'>

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Overwrite flatpickr classes to fit appointment form styling */
 .flatpickr-calendar,
 .flatpickr-innerContainer,
 .flatpickr-rContainer,
