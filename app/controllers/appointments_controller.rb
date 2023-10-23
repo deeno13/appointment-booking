@@ -1,6 +1,7 @@
 class AppointmentsController < ApplicationController
   before_action :set_trainer
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+  before_action :set_date_param, only: [:new, :create, :edit, :update]
 
   def index
     @appointments = @trainer.appointments
@@ -11,14 +12,10 @@ class AppointmentsController < ApplicationController
 
   def new
     @appointment = @trainer.appointments.new
-    @date_param = params[:date] || Date.today.to_s
-    @wday = Date.parse(@date_param).wday
   end
 
   def create
     @appointment = @trainer.appointments.new(appointment_params)
-    @date_param = params[:date] || Date.today.to_s
-    @wday = Date.parse(@date_param).wday
 
     if @appointment.save
       redirect_to trainer_appointment_path(@trainer, @appointment), notice: 'Appointment was successfully created.'
@@ -28,8 +25,6 @@ class AppointmentsController < ApplicationController
   end
 
   def edit
-    @date_param = params[:date] || Date.today.to_s
-    @wday = Date.parse(@date_param).wday
   end
 
   def update
@@ -46,6 +41,13 @@ class AppointmentsController < ApplicationController
   end
 
   private
+
+    # Set the date param to today if it is not set
+    # Set the wday to the day of the week for the date param
+    def set_date_param
+      @date_param = params[:date] || Date.today.to_s
+      @wday = Date.parse(@date_param).wday
+    end
 
     def set_trainer
       @trainer = Trainer.find(params[:trainer_id])
