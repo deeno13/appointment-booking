@@ -23,6 +23,9 @@ class Appointment < ApplicationRecord
     # Make sure the end time is after the start time
     errors.add(:end_time, "must be after the start time") if end_time_after_start_time?
 
+    # Make sure the appointment is at least 1 hour long
+    errors.add(:base, "Appointment must be at least 1 hour long") if less_than_1_hour?
+
     # Make sure the appointment does not overlap with an existing appointment
     errors.add(:base, "Appointment slot is already taken") if overlapping_appointment?
 
@@ -38,15 +41,20 @@ class Appointment < ApplicationRecord
     end_time <= start_time
   end
 
+  def less_than_1_hour?
+    (end_time - start_time) < 1.hour
+  end
+
   def overlapping_appointment?
-    # Don't take into account current appointment
-    existing_appointments = trainer.appointments.where.not(id: id)
+    existing_appointments = trainer.appointments.where.not(id: id) # Don't take into account current appointment
     overlapping_appointments = existing_appointments.overlapping(start_time, end_time)
 
     overlapping_appointments.exists?
   end
 
   def not_within_trainer_availability?
+    # This is a bit hacky because at the moment multiple availabilities of the same day can be created
+    # and it might cause unexpected behavior
     availability = trainer.availabilities.where(day_of_week: start_time.wday).first
     availability_start_time = availability.start_time.strftime('%H:%M:%S')
     availability_end_time = availability.end_time.strftime('%H:%M:%S')

@@ -5,15 +5,25 @@ class Availability < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, presence: true
 
-  validate :end_time_after_start_time
+  validate :time_constraints
 
   private
 
-  def end_time_after_start_time
+  def time_constraints
     return if end_time.blank? || start_time.blank?
 
-    if end_time <= start_time
-      errors.add(:end_time, "must be after the start time")
-    end
+    # Make sure the end time is after the start time
+    errors.add(:end_time, "must be after the start time") if end_time_after_start_time?
+
+    # Make sure the availability is at least 1 hour long
+    errors.add(:base, "Availability must be at least 1 hour long") if less_than_1_hour?
+  end
+
+  def end_time_after_start_time?
+    end_time <= start_time
+  end
+
+  def less_than_1_hour?
+    (end_time - start_time) < 1.hour
   end
 end
