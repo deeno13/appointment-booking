@@ -1,24 +1,210 @@
-# README
+# Book.app: Appointment Booking Software
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Overview
 
-Things you may want to cover:
+Book.app is an appointment booking software developed using Ruby on Rails. This application allows trainers to set their availabilities within a specified time range for a day of the week and enables users to book appointments within those availabilities.
 
-* Ruby version
+## Requirements
 
-* System dependencies
+- Ruby 3.2.2
+- Rails 7.1.1
+- TailwindCSS
+- PostgreSQL
+- [Flatpickr](https://flatpickr.js.org/)
 
-* Configuration
+## Getting Started
 
-* Database creation
+1. Clone the repository and `cd` into the directory
 
-* Database initialization
+```bash
+git clone https://github.com/deeno13/appointment-booking.git
+cd appointment-booking
+```
 
-* How to run the test suite
+2. Install dependencies
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+bundle install
+```
 
-* Deployment instructions
+3. Create and migrate the database
 
-* ...
+```bash
+rails db:create && rails db:migrate
+```
+
+4. Seed the database with sample data: `rails db:seed` (optional)
+5. Start the Rails server
+
+```bash
+bin/dev
+```
+
+Visit `http://localhost:3000` to access the application.
+
+## Models
+
+### 1. Trainer
+
+The `Trainer` model represents the trainer or service who sets that users can book their appointments with.
+
+#### Attributes
+
+- `name:string` - The name of the trainer.
+
+#### Associations
+
+```ruby
+has_many :availabilities # A trainer can have multiple availabilities.
+has_many :appointments # A trainer can have multiple appointments.
+```
+
+#### Example Usage
+
+```ruby
+trainer = Trainer.create(name: 'John Doe')
+```
+
+### 2. Availability
+
+The `Availability` model represents the availabilities set by trainers.
+
+#### Attributes
+
+- `trainer:references` - Foreign key linking the availability to a trainer.
+- `day_of_week:integer` - The day of which the availability is set for.
+- `start_time:datetime` - The start time of the availability.
+- `end_time:datetime` - The end time of the availability.
+
+#### Associations
+
+Each availability can only belong to one trainer
+
+```ruby
+belongs_to :trainer
+```
+
+#### Example Usage
+
+```ruby
+availability = Availability.create(trainer_id: 1, day_of_week: 1, start_time: '09:00', end_time: '17:00')
+```
+
+### 3. Appointment
+
+The `Appointment` model represents booked appointments.
+
+#### Attributes
+
+- `trainer:references` - Foreign key linking the appointment to a trainer.
+- `start_time:datetime` - The start time of the appointment.
+- `end_time:datetime` - The end time of the appointment.
+
+#### Associations
+
+Each appointment can only belong to one trainer
+
+```ruby
+belongs_to :trainer
+```
+
+#### Example Usage
+
+```ruby
+appointment = Appointment.create(trainer_id: 1, start_time: '2023-10-23 10:00', end_time: '2023-10-23 11:00')
+```
+
+## Query for User Availability
+
+To fetch the availability of a service provider for a specific day, you can use the following query:
+
+```ruby
+# Example Query
+date = '2023-10-23'.to_date
+trainer_id = 1
+
+available_time_slots = Availability.where(trainer_id: trainer_id)
+                                   .where.not(id: Appointment.where(trainer_id: trainer_id, start_time: date..date.end_of_day).pluck(:availability_id))
+                                   .pluck(:start_time, :end_time)
+```
+
+This query retrieves the available time slots for a specific day, considering existing appointments.
+
+## Future Considerations
+
+### Availability Overrides
+
+Currently, when a trainer sets an availability for a day of the week (e.g. Monday), it sets that time range for all Mondays onwards. If there happens to be times when a trainer is unavailable on a particular Monday, they're unable to override the availability for that day.
+
+One approach I can think of for now is to
+
+- Add an `Override` model below attributes:
+  - `trainer:references`
+  - `start_time:datetime`
+  - `end_time:datetime`
+- Modify the existing validations and queries to also account for overrides along with existing appointments.
+- Display the time slots list appropriately with something like "Trainer is unavailable on that day", similar to the current validation for when no availability is found for a day.
+
+### Problem with Overlapping Availabilities
+
+At the moment, a trainer adds an availability for a day of the week by selecting the day, start time, and end time with select dropdowns and this can cause overlapping availabilities to be submitted to the database.
+
+One solution I can think of right now is to validate the `day_of_week` attribute of the `Availability` model to have `uniqeness: true` to prevent saving duplicate availabilities for the same day.
+
+A better solution I think would be to do something similar to [Cal.com](https://cal.com/) where each day of the week have toggles and time range fields ready instead of having to create one for a certain day of the week.
+
+### User Authentication and Authorization
+
+As of now, the users for the system are not specified and anyone can create, edit, or destroy any trainer, availability, or appointments. By using [Devise](https://github.com/heartcombo/devise), this can be done either by using:
+
+- **Unimodel approach** with integer roles where both a User and Trainer share the same model so there's no need to customize views and controllers individually.
+- **Multimodel approach** where User and Trainer have their own models which can be useful for more complex needs like custom login pages for each of them.
+
+### User Specific Timezones
+
+The software currently uses "Asia/Kuala Lumpur" which is GMT+8 as the default timezone. Having the dates and times adjust according to different user timezones would be convenient. Although not tested, but instead of setting the default timezone in the application level
+
+```ruby
+module AppointmentBooking
+  class Application < Rails::Application
+    config.time_zone = "Asia/Kuala_Lumpur"
+  end
+end
+```
+
+Maybe the time zone can be set in the controller level instead, with the help of `current_user` from Devise
+
+```ruby
+before_action :set_current_user_timezone
+
+def set_current_user_timezone
+  if current_user
+    Time.zone = current_user.time_zone
+  end
+end
+```
+
+### Different Types of Appointments
+
+Currently users can only create 1-hour appointments with trainers. Also inspired by Cal.com, appointments of different durations might be doable in the future.
+
+One approach I can think of is to:
+
+- Add a `duration:integer'` attribute to the `Appointment` model
+- Set the duration as a query parameter so the Stimulus controllers can determine the duration to set the value of the end time field:
+  ```javascript
+  // e.g. ?duration=30
+  const durationParam = new URL(window.location.href).searchParams.get(
+    "duration"
+  );
+  const duration = parseInt(durationParam);
+  const endTime = startTime.setHours(startTime.getMinutes() + duration);
+  ```
+
+### Notifications and Alerts
+
+The success and error messages for when a record is submitted can be further improved to provide more context or clarity to the user as to what's wrong with their form submission.
+
+### Testing
+
+For some reason, my development machine is unable to perform tests properly which is probably due to my current setup of WSL2 in Windows and the selenium drivers can't quite do the tests from a headless Ubuntu installation.
