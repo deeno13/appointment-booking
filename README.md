@@ -33,8 +33,7 @@ bundle install
 rails db:create && rails db:migrate
 ```
 
-4. Seed the database with sample data: `rails db:seed` (optional)
-5. Start the Rails server
+4. Start the Rails server
 
 ```bash
 bin/dev
