@@ -114,22 +114,6 @@ belongs_to :trainer
 appointment = Appointment.create(trainer_id: 1, start_time: '2023-10-23 10:00', end_time: '2023-10-23 11:00')
 ```
 
-## Query for User Availability
-
-To fetch the availability of a service provider for a specific day, you can use the following query:
-
-```ruby
-# Example Query
-date = '2023-10-23'.to_date
-trainer_id = 1
-
-available_time_slots = Availability.where(trainer_id: trainer_id)
-                                   .where.not(id: Appointment.where(trainer_id: trainer_id, start_time: date..date.end_of_day).pluck(:availability_id))
-                                   .pluck(:start_time, :end_time)
-```
-
-This query retrieves the available time slots for a specific day, considering existing appointments.
-
 ## Future Considerations
 
 ### Availability Overrides
@@ -208,3 +192,17 @@ The success and error messages for when a record is submitted can be further imp
 ### Testing
 
 For some reason, my development machine is unable to perform tests properly which is probably due to my current setup of WSL2 in Windows and the selenium drivers can't quite do the tests from a headless Ubuntu installation.
+
+### Code Maintainability
+
+A lot parts of the project have very long lines of codes and it will be difficult to read as the project grows. I'm considering using [RuboCop](https://github.com/rubocop/rubocop) to lint and format my code in a more standardized manner. My IDE setup doesn't seem to work with RuboCop and more investigation is needed to see why.
+
+There are also some parts of the project like the `AvailabilitiesHelper` that uses SQL queries probably can be improved to use `scope` in the future. This also applies to some of the models that may look a little cluttered at the moment.
+
+The query for getting a trainer's availabilities in the `AvailabilitiesHelper` is quite a hacky solution and is not something I'm proud of. It definitely needs further refactoring when I manage to understand the process better.
+
+### UI/UX Improvements
+
+The current state for the project is very messy with no clear direction of aesthetics. As the project is heavily inspired by Cal.com, some of the elements may need better styling.
+
+The project is currently **NOT** optimized for mobile devices and that is definitely a priority consideration in the future.
