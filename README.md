@@ -190,7 +190,7 @@ Currently users can only create 1-hour appointments with trainers. Also inspired
 
 One approach I can think of is to:
 
-- Add a `duration:integer'` attribute to the `Appointment` model
+- Add a `duration:integer` attribute to the `Appointment` model
 - Set the duration as a query parameter so the Stimulus controllers can determine the duration to set the value of the end time field:
   ```javascript
   // e.g. ?duration=30
