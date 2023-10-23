@@ -206,3 +206,5 @@ The query for getting a trainer's availabilities in the `AvailabilitiesHelper` i
 The current state for the project is very messy with no clear direction of aesthetics. As the project is heavily inspired by Cal.com, some of the elements may need better styling.
 
 The project is currently **NOT** optimized for mobile devices and that is definitely a priority consideration in the future.
+
+The views could also use empty states for when there are no trainers, availabilities, or appointments rendered because as of now there is no logic or implementation to cover that situation.
