@@ -9,11 +9,11 @@ module AvailabilitiesHelper
     end
   end
 
-  def availability_slots(t, a, d)
+  def availability_slots(trainer, appointment, date)
     availability_slots = {}
 
     # Get all the availabilities for the trainer
-    t.availabilities.each do |availability|
+    trainer.availabilities.each do |availability|
       day_of_week = availability.day_of_week
 
       # Initialize the availability_slots hash with the day_of_week as the key
@@ -30,19 +30,19 @@ module AvailabilitiesHelper
     end
 
     # Get all the appointments for the trainer where the date matches the date param
-    t.appointments.where('DATE(start_time) = ?', Date.parse(d)).each do |appointment|
+    trainer.appointments.where('DATE(start_time) = ?', Date.parse(date)).each do |existing_appointment|
       # Skip the appointment if the start_time is not set (can't figure out why this is happening)
-      next unless appointment.start_time
+      next unless existing_appointment.start_time
 
-      day_of_week = appointment.start_time.wday
+      day_of_week = existing_appointment.start_time.wday
 
       availability_slots[day_of_week] ||= {}
 
       # Loop through the appointment start time and end time and add them in 1 hour intervals
       # to the availability_slots hash with the status of :unavailable
-      current_time = appointment.start_time
-      while current_time < appointment.end_time
-        unless appointment.id == a&.id && current_time >= a.start_time && current_time < a.end_time
+      current_time = existing_appointment.start_time
+      while current_time < existing_appointment.end_time
+        unless existing_appointment.id == appointment&.id && current_time >= appointment.start_time && current_time < appointment.end_time
           availability_slots[day_of_week][current_time.strftime('%I:%M %p')] = :unavailable
         end
         current_time += 1.hour
